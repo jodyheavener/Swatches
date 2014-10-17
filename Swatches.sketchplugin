@@ -1,0 +1,63 @@
+// Ask the user for color values
+var hexInput = [doc askForUserInput:"Please enter a sequence of hexadecimal values" initialValue:"#91B6AF, #7D6962, #B96362, #FEE5C6, #E9CE97"];
+    hexInput = hexInput.split(',');
+
+// Get current canvas
+var page     = [doc currentPage];
+var artboard = [[doc currentPage] currentArtboard];
+var canvas   = artboard ? artboard : page;
+
+// Add group layer for swatch groups
+var swatchesGroup = canvas.addLayerOfType("group");
+    swatchesGroup.setName("Palette - " + hexInput.length + " colors");
+    swatchesGroup.frame().x = 0;
+    swatchesGroup.frame().y = 0;
+    swatchesGroup.frame().width = hexInput.length * 150;
+    swatchesGroup.frame().height = 180;
+
+// For each hex value
+for (_i = 0, _len = hexInput.length; _i < _len; _i++) {
+  hexadecimal = hexInput[_i].replace(" ", "");
+  addSwatch(hexadecimal, _i);
+}
+
+// Create a swatch and add it to the swatches group
+function addSwatch(hexadecimal, count) {
+    var colorValue  = [MSColor colorWithHex:hexadecimal alpha:1];
+
+    var swatchGroup = swatchesGroup.addLayerOfType("group");
+        swatchGroup.setName("Swatch: " + hexadecimal);
+        swatchGroup.frame().x = count * 150;
+        swatchGroup.frame().y = 0;
+        swatchGroup.frame().width = 150;
+        swatchGroup.frame().height = 180;
+
+    var colorBlock = swatchGroup.addLayerOfType("rectangle");
+        colorBlock.frame().x = 0;
+        colorBlock.frame().y = 0;
+        colorBlock.frame().width = 130;
+        colorBlock.frame().height = 130;
+        colorBlock.setName(hexadecimal);
+    var colorBlockFills = [[colorBlock style] fills];
+    var colorBlockFillsPart = colorBlockFills.addNewStylePart();
+        colorBlockFillsPart.color = colorValue;
+        colorBlockFillsPart.fillType = 0;
+
+    var colorName = swatchGroup.addLayerOfType("text");
+        colorName.stringValue = "Color name";
+        colorName.name = "Color name";
+        colorName.fontPostscriptName = "ProximaNova-Bold"
+        colorName.fontSize = 15;
+        colorName.textColor = [MSColor colorWithHex:"#444" alpha:1];
+        colorName.frame().x = 0;
+        colorName.frame().y = 137;
+
+    var colorText = swatchGroup.addLayerOfType("text");
+        colorText.stringValue = hexadecimal;
+        colorText.name = hexadecimal;
+        colorName.fontPostscriptName = "ProximaNova-Regular"
+        colorText.fontSize = 13;
+        colorText.textColor = [MSColor colorWithHex:"#777" alpha:1];
+        colorText.frame().x = 0;
+        colorText.frame().y = 159;
+}
