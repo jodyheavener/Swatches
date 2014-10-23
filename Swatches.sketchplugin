@@ -60,4 +60,31 @@ function addSwatch(hexadecimal, count) {
         colorText.textColor = [MSColor colorWithHex:"#777" alpha:1];
         colorText.frame().x = 0;
         colorText.frame().y = 159;
+
+    var rgb = hexToRgb(hexadecimal)
+    var colorTextRGB = swatchGroup.addLayerOfType("text")
+        colorTextRGB.stringValue = "rgb(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ")"
+        colorTextRGB.name = "RGB Value"
+        colorTextRGB.fontPostscriptName = "ProximaNova-Regular"
+        colorTextRGB.fontSize = 14
+        colorTextRGB.textColor = [MSColor colorWithHex:"#888888" alpha:1]
+        colorTextRGB.frame().x = 0
+        colorTextRGB.frame().y = 179
+}
+
+// Convert Hexadecimal value to RGB
+// http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+function hexToRgb(hex) {
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+    return r + r + g + g + b + b;
+  });
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
 }
