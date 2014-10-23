@@ -13,7 +13,7 @@ var swatchesGroup = canvas.addLayerOfType("group")
     swatchesGroup.frame().x = 0
     swatchesGroup.frame().y = 0
     swatchesGroup.frame().width = hexInput.length * 150
-    swatchesGroup.frame().height = 180
+    swatchesGroup.frame().height = 200
 
 // For each hex value
 for (_i = 0, _len = hexInput.length; _i < _len; _i++) {
