@@ -36,7 +36,10 @@ function addSwatch(hexadecimal, count) {
         swatchGroup.frame().height = 180
 
     var colorBlock = swatchGroup.addLayerOfType("rectangle")
-        colorBlock = colorBlock.embedInShapeGroup()
+        if (colorBlock.embedInShapeGroup != undefined) {
+            colorBlock = colorBlock.embedInShapeGroup()
+        }
+
         colorBlock.frame().x = 0
         colorBlock.frame().y = 0
         colorBlock.frame().width = 130
